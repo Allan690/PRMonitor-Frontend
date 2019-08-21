@@ -1,4 +1,4 @@
-# vue-dashboard
+# PRMonitor - Frontend
 
 ## Project setup
 ```
