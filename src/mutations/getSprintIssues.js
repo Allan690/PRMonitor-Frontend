@@ -1,8 +1,10 @@
 import gql from 'graphql-tag';
 
+/** @description mutation that fetches all issues from a particular sprint
+ * @returns string
+ */
 const getSprintIssuesMutation = gql`
    mutation($boardId: Int!, $sprintId: Int!) {
-#       mutation {
            getSprintStories(input: {
                boardId: $boardId,
                idOfSprint: $sprintId
@@ -13,15 +15,12 @@ const getSprintIssuesMutation = gql`
                    issueId
                    issueUrl
                    issueProjectKey
-                   issueDescription
                    issueCreator
                    assigneeDetails {
                        displayName
-                       url
                    }
                    issueStatus
                    issueTypeDetails {
-                       issueTypeIconUrl
                        issueType
                    }
                    SprintsCoveredByStory {
@@ -36,7 +35,6 @@ const getSprintIssuesMutation = gql`
                }
            }
        }
-#   }
 `;
 
 export default getSprintIssuesMutation;
