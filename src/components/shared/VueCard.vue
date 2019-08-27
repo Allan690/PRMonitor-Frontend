@@ -1,30 +1,32 @@
 <template>
-    <div class="recipe-card">
-        <aside>
-            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/203277/oatmeal.jpg" alt="Chai Oatmeal" />
+    <el-container style="margin-left: 20px; margin-top: 15px;">
+        <div class="recipe-card">
+            <aside>
+                <img src="../../assets/travel.png" alt="Chai Oatmeal" />
 
-            <a href="#" class="button"><span class="icon icon-play"></span></a>
-        </aside>
-        <article>
-            <h2>{{ sprintKey }}</h2>
-            <h3>Status: {{ sprintStatus }}</h3>
-            <ul>
-                <li><span class="icon icon-users"></span><span>1</span></li>
-                <li><span class="icon icon-clock"></span><span>{{ sprintsCovered}} sps</span></li>
-                <li><span class="icon icon-level"></span><span>{{sprintName}}</span></li>
-                <li><span class="icon icon-calories"></span><span>{{storyType}}</span></li>
-            </ul>
+                <a href="#" class="button"><span class="icon icon-play"></span></a>
+            </aside>
+            <article>
+                <h2>{{ sprintKey }}</h2>
+                <h3>Status: {{ sprintStatus }}</h3>
+                <ul>
+                    <li><span class="icon icon-users"></span><span>1</span></li>
+                    <li><span class="icon icon-clock"></span><span>{{ sprintsCovered}} sps</span></li>
+                    <li><span class="icon icon-level"></span><span>{{sprintName}}</span></li>
+                    <li><span class="icon icon-calories"></span><span>{{storyType}}</span></li>
+                </ul>
 
-            <p class="descriptionBody" v-html="description"></p>
+                <p class="descriptionBody" v-html="description"></p>
 
-            <el-row style="display: inline-flex">
-            <p class="ingredients"><span>Assignee:&nbsp;</span>{{assigneeName}}</p>
-            <p class="ingredients" style="margin-left: 5px"><span>Reporter:&nbsp;</span>{{reporterName}}</p>
-        </el-row>
+                <el-row style="display: inline-flex">
+                    <p class="ingredients"><span>Assignee:&nbsp;</span>{{assigneeName}}</p>
+                    <p class="ingredients" style="margin-left: 5px"><span>Reporter:&nbsp;</span>{{reporterName}}</p>
+                </el-row>
 
-        </article>
+            </article>
 
-    </div>
+        </div>
+    </el-container>
 </template>
 
 
@@ -44,7 +46,9 @@
             reporterName: String
         },
         mounted() {
-            this.description = replaceLineBreaks(this.description);
+            if(this.description) {
+                this.description = replaceLineBreaks(this.description);
+            }
         }
     }
 </script>
@@ -79,14 +83,14 @@
         margin: 15px;
         width: 90%;
         max-width: 496px;
-        border-radius: 5px;
+        border-radius: 25px;
     }
     .recipe-card aside {
         position: relative;
     }
     .recipe-card aside img {
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
+        border-top-left-radius: 25px;
+        border-top-right-radius: 25px;
     }
     .recipe-card aside .button {
         background: #57abf2;
