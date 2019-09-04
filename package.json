@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
+    "start:dev": "vue-cli-service serve --mode development",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
@@ -14,14 +15,17 @@
     "core-js": "^2.6.5",
     "element-ui": "^2.11.1",
     "eslint-utils": "1.4.1",
+    "firebase": "^6.6.0",
     "github-markdown-css": "^3.0.1",
     "graphql": "^14.4.2",
     "graphql-tag": "latest",
     "lodash": "^4.17.15",
     "reset-css": "^4.0.1",
+    "simple-crypto-js": "^2.2.0",
     "tailwindcss": "^1.1.1",
     "vue": "^2.6.10",
     "vue-apollo": "^3.0.0-rc.2",
+    "vue-material": "^1.0.0-beta-11",
     "vue-router": "^3.1.2"
   },
   "devDependencies": {

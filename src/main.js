@@ -8,6 +8,10 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import VueApollo from 'vue-apollo';
 import BoardsComponent from "@/components/presentational/BoardsComponent";
 import SprintStoriesComponent from "@/components/presentational/SprintStoriesComponent";
+import SprintsComponent from "@/components/presentational/SprintsComponent";
+import LabelledTasksComponent from "@/components/presentational/LabelledTasks";
+import 'vue-material/dist/vue-material.min.css'
+import LoginScreen from "@/components/container/LoginScreen";
 
 const cache = new InMemoryCache();
 const apolloClient = new ApolloClient({
@@ -26,8 +30,12 @@ Vue.use(VueRouter);
 Vue.config.productionTip = false;
 
 const routes = [
-  { path: '/issues/:boardNo', name: 'sprintIssues', component: SprintStoriesComponent, props: true},
-  { path: '/', name: 'allBoards', component: BoardsComponent }
+  { path: '/issues/:boardId/:sprintId', name: 'sprintIssues', component: SprintStoriesComponent, props: true},
+  { path: '/sprints/:boardNo', name: 'sprints', component: SprintsComponent, props: true},
+  { path: '/boards', name: 'allBoards', component: BoardsComponent },
+  { path: '/pullRequests',  name: 'pullRequests', component: LabelledTasksComponent, props: true},
+  { path: '/login', name: 'login', component: LoginScreen, props: true },
+  { path: '/', redirect: '/login'}
 ];
 
 const router = new VueRouter({

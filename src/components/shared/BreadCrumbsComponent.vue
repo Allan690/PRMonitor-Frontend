@@ -9,10 +9,10 @@
             separator-class="el-icon-arrow-right"
             class="breadcrumb-container"
     >
-        <el-breadcrumb-item :to="{ path: '/' }">homepage</el-breadcrumb-item>
-        <el-breadcrumb-item>promotion management</el-breadcrumb-item>
-        <el-breadcrumb-item>promotion list</el-breadcrumb-item>
-        <el-breadcrumb-item>promotion detail</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/boards' }">{{ root }}</el-breadcrumb-item>
+        <el-breadcrumb-item v-if="levelOne" :to="{ path: `${levelOnePath}` }">{{ levelOne }}</el-breadcrumb-item>
+        <el-breadcrumb-item v-if="levelTwo" :to="{ path: `${levelTwoPath}` }">{{ levelTwo }}</el-breadcrumb-item>
+        <el-breadcrumb-item v-if="levelThree" :to="{ path: `${levelThreePath}` }">{{ levelThree }}</el-breadcrumb-item>
     </el-breadcrumb>
 </template>
 

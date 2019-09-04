@@ -1,17 +1,21 @@
 <template>
     <el-container class="appContainer">
-        <side-nav-component></side-nav-component>
+        <side-nav-component
+                v-on:github-reviewing="passProps"
+                v-on:github-finished="passProps"
+                v-on:github-wip="passProps"
+        ></side-nav-component>
         <el-container style="margin-left: 300px;">
             <search-component></search-component>
             <el-main>
                 <bread-crumbs-component
-                :root="page"
-                :level-one="directory"
-                :level-one-path="path"
+                        :root="root"
+                        :level-one="levelOne"
+                        :level-one-path="levelOnePath"
                 ></bread-crumbs-component>
                 <div style="margin-top: 100px;">
                     <keep-alive>
-                        <get-boards-component></get-boards-component>
+                       <get-labelled-tasks-component :label="label"></get-labelled-tasks-component>
                     </keep-alive>
                 </div>
             </el-main>
@@ -23,16 +27,22 @@
     import SideNavComponent from "@/components/shared/SideNavComponent";
     import SearchComponent from "@/components/shared/SearchComponent";
     import BreadCrumbsComponent from "@/components/shared/BreadCrumbsComponent";
-    import GetBoardsComponent from "@/components/container/getBoardsComponent";
+    import GetLabelledTasksComponent from "@/components/container/getLabelledTasks";
 
     export default {
-        name: 'BoardsComponent',
-        components: { GetBoardsComponent, BreadCrumbsComponent, SearchComponent, SideNavComponent },
+        name: 'LabelledTasksComponent',
+        components: { GetLabelledTasksComponent, BreadCrumbsComponent, SearchComponent, SideNavComponent},
         data() {
             return {
-                page: 'PRMonitor',
-                directory: 'boards',
-                path: '/boards'
+                root: 'PRMonitor',
+                levelOne: 'Github',
+                levelOnePath: '/pullRequests',
+                label: ''
+            }
+        },
+        methods: {
+            passProps(props) {
+                this.label = props;
             }
         }
     }

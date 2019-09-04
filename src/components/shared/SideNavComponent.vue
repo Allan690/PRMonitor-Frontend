@@ -15,7 +15,9 @@
                 class="el-menu-vertical-demo"
                 background-color="#545c64"
                 text-color="#fff"
-                active-text-color="#ffd04b">
+                active-text-color="#ffd04b"
+                :default-openeds="['0', '1', '2', '3']"
+        >
             <el-submenu index="1">
 
                 <template slot="title">
@@ -28,18 +30,23 @@
                 </template>
 
                 <el-menu-item-group title="Github Tasks">
-                    <el-menu-item index="1-1" onclick="">
+                    <el-menu-item index="1-1" @click="loadFinishedTasks">
                         <i class="el-icon-finished"></i>
                         <span>Finished Tasks</span>
                     </el-menu-item>
-                    <el-menu-item index="1-2">
+                    <el-menu-item index="1-2" @click="loadTasksInReviewing">
                         <i class="el-icon-help"></i>
-                        <span>Merged Tasks</span>
+                        <span>In Reviewing</span>
+                    </el-menu-item>
+
+                    <el-menu-item index="1-3" @click="loadWIPTasks">
+                        <i class="el-icon-bicycle"></i>
+                        <span>Work In Progress</span>
                     </el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
             <!--         End of Github pane start of Jira pane-->
-            <el-submenu index="2">
+            <el-submenu index="2" v-if="componentName !== undefined">
                 <template slot="title">
                     <img src="../../assets/jira.png"
                          style="margin-left: -5px"
@@ -47,36 +54,33 @@
                     <span class="navigator-two">Jira</span>
                 </template>
                 <el-menu-item-group title="Jira Stories">
-                    <el-menu-item index="2-1"
-                                  v-on:click="currentComponent = 'getSprintStories'"
-                                  v-bind:key="'getSprintStories'"
-                    >
+                    <el-menu-item index="2-1" @click="filterStories('All')">
                         <i class="el-icon-full-screen"></i>
                         <span>All Stories</span>
                     </el-menu-item>
-                    <el-menu-item index="2-2">
+                        <el-menu-item index="2-2" @click="filterStories('In Progress')">
                         <i class="el-icon-data-line"></i>
                         <span>In Progress</span>
                     </el-menu-item>
-                    <el-menu-item index="2-3">
+                    <el-menu-item index="2-3" @click="filterStories('QA')">
                         <i class="el-icon-scissors"></i>
                         <span>QA</span>
                     </el-menu-item>
-                    <el-menu-item index="2-4">
+                    <el-menu-item index="2-4" @click="filterStories('Validating')">
                         <i class="el-icon-data-analysis"></i>
-                        <span>Validation</span>
+                        <span>Validating</span>
                     </el-menu-item>
-                    <el-menu-item index="2-5">
+                    <el-menu-item index="2-5" @click="filterStories('Done')">
                         <i class="el-icon-circle-check"></i>
                         <span>Done</span>
                     </el-menu-item>
                 </el-menu-item-group>
                 <el-menu-item-group title="Boards & Sprints">
-                    <el-menu-item index="3-1">
+                    <el-menu-item index="3-1" @click="loadBoards">
                         <i class="el-icon-data-board"></i>
                         <span>All Boards</span>
                     </el-menu-item>
-                    <el-menu-item index="3-2">
+                    <el-menu-item index="3-2" @click="loadSprints">
                         <i class="el-icon-bank-card"></i>
                         <span>All Sprints</span>
                     </el-menu-item>
@@ -109,7 +113,35 @@
     export default {
         name: 'SideNavComponent',
         data() {
-            return { boardNo: '', currentComponent: ''}
+            return { boardNo: '', currentComponent: '', params: { }}
+        },
+        props: {
+            componentName : String
+        },
+        methods: {
+            filterStories(status) {
+                const { boardId, sprintId } = this.$route.params;
+                this.$router.push(`/issues/${boardId}/${sprintId}?status=${status}`);
+            },
+            loadBoards() {
+                this.$router.push('/boards');
+            },
+            loadSprints() {
+                const { boardId } = this.$route.params;
+                this.$router.push(`/sprints/${boardId}`);
+            },
+            loadFinishedTasks() {
+                this.$emit('github-finished', 'finished');
+                this.$router.push('/pullRequests?label=finished')
+            },
+            loadTasksInReviewing() {
+                this.$emit('github-reviewing', 'reviewing');
+                this.$router.push('/pullRequests?label=reviewing')
+            },
+            loadWIPTasks() {
+                this.$emit('github-wip', 'Work In Progress');
+                this.$router.push('/pullRequests?label=Work In Progress')
+            }
         }
     }
 </script>

@@ -1,25 +1,28 @@
 <template>
   <router-view id="app">
-    <boards-component></boards-component>
+    <LoginScreen></LoginScreen>
   </router-view>
 </template>
 
 <script>
   import 'reset-css'
-  import BoardsComponent from "@/components/presentational/BoardsComponent";
+  import LoginScreen from "@/components/container/LoginScreen";
 
   export default {
     name: 'app',
     components: {
-      BoardsComponent
+      LoginScreen
     },
-    props: ['activeComponent']
+    data() {
+      return { currentComponent: 'LoginScreen' }
+    }
   }
 </script>
 
 <style>
   #app {
-    font-family: Helvetica, Arial, sans-serif;
+    font-family: "Raleway", sans-serif;
+    letter-spacing: 0.5px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
