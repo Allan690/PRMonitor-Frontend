@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const getAllBoardsMutation = gql `
-    mutation {
+    query {
         getAllBoards {
             maxResults
             projectDetails {

@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 const getAllSprintsMutation = gql `
-    mutation($boardId: Int!) {
+    query($boardId: Int!) {
         getAllSprints(boardId: $boardId) {
             maxResults
             total

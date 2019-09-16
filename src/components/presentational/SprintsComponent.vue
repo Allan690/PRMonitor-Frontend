@@ -5,13 +5,15 @@
             <search-component></search-component>
             <el-main>
                 <bread-crumbs-component
-                :root="page"
-                :level-one="directory"
-                :level-one-path="path"
+                        :root="root"
+                        :level-one="levelOne"
+                        :level-one-path="levelOnePath"
+                        :level-two="levelTwo"
+                        :level-two-path="levelTwoPath"
                 ></bread-crumbs-component>
                 <div style="margin-top: 100px;">
                     <keep-alive>
-                        <get-boards-component></get-boards-component>
+                        <get-all-sprints></get-all-sprints>
                     </keep-alive>
                 </div>
             </el-main>
@@ -23,16 +25,18 @@
     import SideNavComponent from "@/components/shared/SideNavComponent";
     import SearchComponent from "@/components/shared/SearchComponent";
     import BreadCrumbsComponent from "@/components/shared/BreadCrumbsComponent";
-    import GetBoardsComponent from "@/components/container/getBoardsComponent";
-
+    import GetAllSprints from "@/components/container/getAllSprints";
     export default {
-        name: 'BoardsComponent',
-        components: { GetBoardsComponent, BreadCrumbsComponent, SearchComponent, SideNavComponent },
+        name: 'SprintsComponent',
+        components: {GetAllSprints, BreadCrumbsComponent, SearchComponent, SideNavComponent},
         data() {
+            const { boardNo } = this.$route.params;
             return {
-                page: 'PRMonitor',
-                directory: 'boards',
-                path: '/boards'
+                root: 'PRMonitor',
+                levelOne: 'boards',
+                levelTwo: 'sprints',
+                levelOnePath: '/boards',
+                levelTwoPath: `/sprints/${boardNo}`
             }
         }
     }

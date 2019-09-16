@@ -20,7 +20,7 @@
 
                 <el-row style="display: inline-flex">
                     <p class="ingredients"><span>Assignee:&nbsp;</span>{{assigneeName}}</p>
-                    <p class="ingredients" style="margin-left: 5px"><span>Reporter:&nbsp;</span>{{reporterName}}</p>
+                    <p class="ingredients" style="margin-left: 100px"><span>Reporter:&nbsp;</span>{{reporterName}}</p>
                 </el-row>
 
             </article>
@@ -143,6 +143,7 @@
     }
     .recipe-card article h3 {
         font-size: 0.9375em;
+        margin-top: 5px;
         color: #838689;
         display: -webkit-box;
         -webkit-line-clamp: 2;

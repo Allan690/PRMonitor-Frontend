@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
  * @returns string
  */
 const getSprintIssuesMutation = gql`
-   mutation($boardId: Int!, $sprintId: Int!) {
+   query($boardId: Int!, $sprintId: Int!) {
            getSprintStories(input: {
                boardId: $boardId,
                idOfSprint: $sprintId

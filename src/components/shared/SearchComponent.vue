@@ -28,21 +28,47 @@
             </div>
         </div>
         <div class="toolbar-button">
-            <button class="action-button">
+            <button class="action-button" @click="callLogoutModal">
                 <img
                         alt="profile picture"
                         class="upic"
-                        src="https://lh4.googleusercontent.com/-JFAtrgPLayg/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rdL0KuU0VfH-y0lDYx9g2u0iAw_aQ/s50/photo.jpg"/>
-                <span class="too-bar-username">Allan Mogusu</span>
-
+                        :src="userDetails.picture"/>
+                <span class="too-bar-username">{{ userDetails.name }}</span>
             </button>
         </div>
     </el-header>
 </template>
 
 <script>
+    import decryptUserDetails from "@/utils";
+
     export default {
-        name: 'SearchComponent'
+        name: 'SearchComponent',
+        data() {
+            return {
+                userDetails: {}
+            }
+        },
+        created() {
+            const { picture, name } = decryptUserDetails();
+            this.userDetails = { picture , name };
+        },
+        methods: {
+            callLogoutModal() {
+                this.$confirm(`Hi ${this.userDetails.name}, do you want to proceed to logout?`, 'Logout', {
+                    confirmButtonText: 'OK',
+                    cancelButtonText: 'Cancel',
+                    type: 'info'
+                }).then(() => {
+                    this.onLogout()
+                });
+            },
+            onLogout() {
+                localStorage.removeItem('loggedInUser');
+                this.$apolloProvider.defaultClient.resetStore();
+                this.$router.push('/login');
+            }
+        }
     }
 </script>
 
@@ -88,7 +114,6 @@
         box-sizing: border-box;
         color: rgb(0, 0, 0);
         display: block;
-        font-family: Poppins, sans-serif;
         height: 50px;
         line-height: 18.4px;
         min-width: 150px;
@@ -126,7 +151,7 @@
     }
     .action-button {
         height: 45px;
-        min-width: 182px;
+        min-width: 180px;
         border: 1px solid rgba(128,143,163,.11);
         border-radius: 6px;
         background-color: #fff;
@@ -134,12 +159,14 @@
         justify-content: center;
         align-items: center;
         outline: 0;
+        overflow: visible;
     }
     .upic {
         width: 34px;
         height: 34px;
         border-radius: 50%;
         border: 1px solid #fff;
+        margin-left: -15px;
     }
     .too-bar-username {
         font-size: 1rem;
@@ -148,4 +175,12 @@
         color: rgb(96, 98, 102);
         padding: 6px 1px 6px 6px;
     }
+
+   @media only screen and (min-width: 1920px){
+       .toolbar-button {
+           margin-top: 10px;
+           margin-left: 890px;
+           margin-right: 2.5em;
+       }
+   }
 </style>

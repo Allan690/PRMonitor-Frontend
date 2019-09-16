@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const getSingleIssue = gql `    
-    mutation($issueProjectId: String!) {
+    query($issueProjectId: String!) {
         getSingleIssue(issueProjectId: $issueProjectId) {
             issueId
             issueUrl

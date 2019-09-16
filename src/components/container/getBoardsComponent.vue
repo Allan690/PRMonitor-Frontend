@@ -1,10 +1,10 @@
 <template>
 <div class="board">
     <el-container>
-        <el-container style="display: flex" v-for="board in boardDetails" v-bind:key="board">
+        <el-container style="display: flex;" v-for="board in boardDetails" v-bind:key="board.projectId">
             <div class="container">
                 <div class="recipe-card">
-                    <div class="header" v-on:click="loadSprints">
+                    <div class="header">
                         <button class="edit"><i class="fa fa-tasks" aria-hidden="true"></i></button>
                     </div>
                     <div class="body">
@@ -27,35 +27,60 @@
 </template>
 
 <script>
-    import getAllBoardsMutation from "@/mutations/getAllBoards";
+    import getAllBoardsMutation from "@/queries/getAllBoards";
+    import decryptUserDetails from "@/utils";
 
     export default {
         name: 'GetBoardsComponent',
         data() {
-            return { boardDetails: [], boardNo: 0 }
+            return { boardDetails: [], boardNo: 0}
         },
         methods: {
             async getAllBoards() {
                 try {
-                    const response = await this.$apollo.mutate({
-                        mutation: getAllBoardsMutation
+                    const { token } = decryptUserDetails();
+                    const response = await this.$apollo.query({
+                        query: getAllBoardsMutation,
+                        context: {
+                            headers: {
+                                Authorization: `Bearer ${token}`
+                            }
+                        }
                     });
                     const { data: { getAllBoards: { projectDetails }}} = response;
                     return projectDetails;
                 }
                 catch(err) {
-                    // console.log(err);
+                    this.$notify.error({
+                        title: 'Error', message: err.message
+                    })
                 }
             },
-
             loadSprints(event) {
                const boardId = event.target.dataset["v-099ab69c"];
                localStorage.setItem('boardId', boardId);
-               this.$router.push(`/issues/${boardId}`)
+               this.$router.push(`/sprints/${boardId}`)
             }
         },
         async mounted() {
+            if(!decryptUserDetails()) {
+                this.$notify.error({
+                    title: 'Unauthorized',
+                    message: 'You are unauthorized to access this application'
+                });
+                setTimeout(() => {
+                    this.$router.push('/login');
+                }, 3000)
+            }
+            const { name } = decryptUserDetails();
+            if(this.$route.query.login === 'success') {
+                this.$notify.success({
+                    title: `Welcome, ${name}`,
+                    message: "You were logged in successfully!"
+                })
+            }
             this.boardDetails = await this.getAllBoards();
+
         }
     }
 </script>
@@ -164,8 +189,7 @@
         border-bottom: 1px solid #16a085;
         color: #16a085;
         display: block;
-        margin: 0;
-        margin-bottom: 5px;
+        margin: 0 0 5px;
         font-family: "Raleway", sans-serif;
         font-size: 1.5rem;
         font-weight: 300;
@@ -176,8 +200,7 @@
         color: #27ae60;
         font-family: "Raleway", sans-serif;
         font-weight: 300;
-        margin: 0;
-        margin-bottom: 15px;
+        margin: 0 0 15px;
         padding: 0;
         text-align: right;
     }

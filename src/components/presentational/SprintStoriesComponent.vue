@@ -1,10 +1,17 @@
 <template>
     <el-container class="appContainer">
-        <side-nav-component></side-nav-component>
+        <side-nav-component component-name="sprintStories"></side-nav-component>
         <el-container style="margin-left: 300px;">
             <search-component></search-component>
             <el-main>
-                <bread-crumbs-component></bread-crumbs-component>
+                <bread-crumbs-component
+                        :root="root"
+                        :level-one="levelOne"
+                        :level-one-path="levelOnePath"
+                        :level-two="levelTwo"
+                        :level-two-path="levelTwoPath"
+                        :level-three="levelThree"
+                ></bread-crumbs-component>
                 <div style="margin-top: 100px;">
                     <keep-alive>
                       <get-sprint-stories></get-sprint-stories>
@@ -33,6 +40,18 @@
 
     export default {
         name: 'SprintStoriesComponent',
-        components: {GetSprintStories, BreadCrumbsComponent, SearchComponent, SideNavComponent },
+        components: { GetSprintStories, BreadCrumbsComponent, SearchComponent, SideNavComponent },
+        data() {
+            const { boardId } = this.$route.params;
+            return {
+                root: 'PRMonitor',
+                levelOne: 'boards',
+                levelOnePath: '/boards',
+                levelTwo: 'sprints',
+                levelTwoPath: `/sprints/${boardId}`,
+                levelThree: 'issues'
+            }
+
+        }
     }
 </script>
