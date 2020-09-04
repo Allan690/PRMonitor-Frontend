@@ -21,7 +21,7 @@
     "graphql-tag": "latest",
     "lodash": "^4.17.15",
     "reset-css": "^4.0.1",
-    "simple-crypto-js": "^2.2.0",
+    "simple-crypto-js": "^2.3.0",
     "tailwindcss": "^1.1.1",
     "vue": "^2.6.10",
     "vue-apollo": "^3.0.0-rc.2",
